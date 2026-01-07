@@ -57,7 +57,7 @@ fun UnitConverter(modifier: Modifier) {
     var outputValue by remember { mutableStateOf("") }
     var inputUnit by remember { mutableStateOf("Centimeter") }
     var outputUnit by remember { mutableStateOf("Meter") }
-    val iExpanded by remember { mutableStateOf(false) }
+    var iExpanded by remember { mutableStateOf(false) }
     var oExpanded by remember { mutableStateOf(false) }
     val conversionFactor = remember { mutableStateOf(0.01) }
 
@@ -80,15 +80,24 @@ fun UnitConverter(modifier: Modifier) {
             label = {Text("Enter Value")})
         Spacer(modifier = Modifier.height(10.dp))
         Row {
+            //Input Box
             //Here all the UI elements will be stacked nect to each other
             Box{
-                Button(onClick = { /*TODO*/ }) {
+                // Input Button
+                Button(onClick = { iExpanded = true }) {
                     Text("Select")
                     Icon(Icons.Default.ArrowDropDown,
                         contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = false, onDismissRequest = {/*TODO*/}) {
-                    DropdownMenuItem(text =  {Text("Centimeter")}, onClick = { /*TODO*/})
+                DropdownMenu(expanded = iExpanded, onDismissRequest = { iExpanded = false}) {
+                    DropdownMenuItem(text =  {Text("Centimeter")},
+                        onClick = {
+                            iExpanded = false
+                            inputUnit = "Centimeter"
+                            conversionFactor.value = 0.01
+
+                        }
+                    )
                     DropdownMenuItem(text =  {Text("Meter")}, onClick = { /*TODO*/})
                     DropdownMenuItem(text =  {Text("Feet")}, onClick = { /*TODO*/})
                     DropdownMenuItem(text =  {Text("Millimeter")}, onClick = { /*TODO*/})
@@ -96,13 +105,15 @@ fun UnitConverter(modifier: Modifier) {
                 }
             }
             Spacer(modifier = Modifier.width(10.dp))
+            // Output Box
             Box{
-                Button(onClick = { /*TODO*/ }) {
+                // Output Button
+                Button(onClick = { oExpanded = true }) {
                     Text("Select")
                     Icon(Icons.Default.ArrowDropDown,
                         contentDescription = "Arrow Down")
                 }
-                DropdownMenu(expanded = false, onDismissRequest = {/*TODO*/}) {
+                DropdownMenu(expanded = oExpanded, onDismissRequest = { oExpanded = false}) {
                     DropdownMenuItem(text =  {Text("Centimeter")}, onClick = { /*TODO*/})
                     DropdownMenuItem(text =  {Text("Meter")}, onClick = { /*TODO*/})
                     DropdownMenuItem(text =  {Text("Feet")}, onClick = { /*TODO*/})
