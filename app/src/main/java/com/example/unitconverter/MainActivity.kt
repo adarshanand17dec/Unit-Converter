@@ -32,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.unitconverter.ui.theme.UnitConverterTheme
+import kotlin.math.roundToInt
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,6 +61,15 @@ fun UnitConverter(modifier: Modifier) {
     var iExpanded by remember { mutableStateOf(false) }
     var oExpanded by remember { mutableStateOf(false) }
     val conversionFactor = remember { mutableStateOf(0.01) }
+
+    fun convertUnits(){
+
+        // ?: - elvis operator
+        val inputValueDouble = inputValue.toDoubleOrNull() ?: 0.0
+        val result = (inputValueDouble * conversionFactor.value * 100.0).roundToInt() / 100.0
+        outputValue = result.toString()
+
+    }
 
 
 
@@ -95,12 +105,34 @@ fun UnitConverter(modifier: Modifier) {
                             iExpanded = false
                             inputUnit = "Centimeter"
                             conversionFactor.value = 0.01
+                            convertUnits()
 
                         }
                     )
-                    DropdownMenuItem(text =  {Text("Meter")}, onClick = { /*TODO*/})
-                    DropdownMenuItem(text =  {Text("Feet")}, onClick = { /*TODO*/})
-                    DropdownMenuItem(text =  {Text("Millimeter")}, onClick = { /*TODO*/})
+                    DropdownMenuItem(text =  {Text("Meter")},
+                        onClick = {
+                            iExpanded = false
+                            inputUnit = "Meter"
+                            conversionFactor.value = 1.0
+                            convertUnits()
+                        }
+                    )
+                    DropdownMenuItem(text =  {Text("Feet")},
+                        onClick = {
+                            iExpanded = false
+                            inputUnit = "Feet"
+                            conversionFactor.value = 0.3048
+                            convertUnits()
+                        }
+                    )
+                    DropdownMenuItem(text =  {Text("Millimeter")},
+                        onClick = {
+                            iExpanded = false
+                            inputUnit = "Millimeter"
+                            conversionFactor.value = 0.001
+                            convertUnits()
+                        }
+                    )
 
                 }
             }
