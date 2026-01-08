@@ -19,6 +19,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,8 +30,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.unitconverter.ui.theme.UnitConverterTheme
 import kotlin.math.roundToInt
 
@@ -64,46 +69,56 @@ fun UnitConverter(modifier: Modifier) {
     val oConversionFactor = remember { mutableStateOf(1.00) }
 
 
-    fun convertUnits(){
+    val customTextStyle = TextStyle(
+        fontFamily = FontFamily.Default, // Replace with your desired font family
+        fontSize = 16.sp, // Replace with your desired font size
+        color = Color.Red // Replace with your desired text color
+    )
 
-        // ?: - elvis operator
-        val inputValueDouble = inputValue.toDoubleOrNull() ?: 0.0
-        val result = (inputValueDouble * conversionFactor.value * 100.0 / oConversionFactor.value).roundToInt() / 100.0
-        outputValue = result.toString()
+                fun convertUnits() {
 
-    }
+                    // ?: - elvis operator
+                    val inputValueDouble = inputValue.toDoubleOrNull() ?: 0.0
+                    val result =
+                        (inputValueDouble * conversionFactor.value * 100.0 / oConversionFactor.value).roundToInt() / 100.0
+                    outputValue = result.toString()
+
+                }
 
 
-
-    Column(
-        modifier = modifier.fillMaxSize(),
+                Column (
+                modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
-    ){
+    ) {
 
-       //Here all the UI elements will be stacked below each other
-        Text("Unit Converter")
+        //Here all the UI elements will be stacked below each other
+        Text("Unit Converter", style = MaterialTheme.typography.headlineLarge)
         Spacer(modifier = Modifier.height(10.dp))
-        OutlinedTextField(value = inputValue, onValueChange = {
-            inputValue = it
-            convertUnits()
-        // Here goes what should happen, when the value of OutlinedTextField change
+        OutlinedTextField(
+            value = inputValue, onValueChange = {
+                inputValue = it
+                convertUnits()
+                // Here goes what should happen, when the value of OutlinedTextField change
 
-        },
-            label = {Text("Enter Value")})
+            },
+            label = { Text("Enter Value") })
         Spacer(modifier = Modifier.height(10.dp))
         Row {
             //Input Box
             //Here all the UI elements will be stacked nect to each other
-            Box{
+            Box {
                 // Input Button
                 Button(onClick = { iExpanded = true }) {
                     Text(inputUnit)
-                    Icon(Icons.Default.ArrowDropDown,
-                        contentDescription = "Arrow Down")
+                    Icon(
+                        Icons.Default.ArrowDropDown,
+                        contentDescription = "Arrow Down"
+                    )
                 }
-                DropdownMenu(expanded = iExpanded, onDismissRequest = { iExpanded = false}) {
-                    DropdownMenuItem(text =  {Text("Centimeter")},
+                DropdownMenu(expanded = iExpanded, onDismissRequest = { iExpanded = false }) {
+                    DropdownMenuItem(
+                        text = { Text("Centimeter") },
                         onClick = {
                             iExpanded = false
                             inputUnit = "Centimeter"
@@ -112,7 +127,8 @@ fun UnitConverter(modifier: Modifier) {
 
                         }
                     )
-                    DropdownMenuItem(text =  {Text("Meter")},
+                    DropdownMenuItem(
+                        text = { Text("Meter") },
                         onClick = {
                             iExpanded = false
                             inputUnit = "Meter"
@@ -120,7 +136,8 @@ fun UnitConverter(modifier: Modifier) {
                             convertUnits()
                         }
                     )
-                    DropdownMenuItem(text =  {Text("Feet")},
+                    DropdownMenuItem(
+                        text = { Text("Feet") },
                         onClick = {
                             iExpanded = false
                             inputUnit = "Feet"
@@ -128,7 +145,8 @@ fun UnitConverter(modifier: Modifier) {
                             convertUnits()
                         }
                     )
-                    DropdownMenuItem(text =  {Text("Millimeter")},
+                    DropdownMenuItem(
+                        text = { Text("Millimeter") },
                         onClick = {
                             iExpanded = false
                             inputUnit = "Millimeter"
@@ -141,15 +159,18 @@ fun UnitConverter(modifier: Modifier) {
             }
             Spacer(modifier = Modifier.width(10.dp))
             // Output Box
-            Box{
+            Box {
                 // Output Button
                 Button(onClick = { oExpanded = true }) {
                     Text(outputUnit)
-                    Icon(Icons.Default.ArrowDropDown,
-                        contentDescription = "Arrow Down")
+                    Icon(
+                        Icons.Default.ArrowDropDown,
+                        contentDescription = "Arrow Down"
+                    )
                 }
-                DropdownMenu(expanded = oExpanded, onDismissRequest = { oExpanded = false}) {
-                    DropdownMenuItem(text =  {Text("Centimeter")},
+                DropdownMenu(expanded = oExpanded, onDismissRequest = { oExpanded = false }) {
+                    DropdownMenuItem(
+                        text = { Text("Centimeter") },
                         onClick = {
                             oExpanded = false
                             outputUnit = "Centimeter"
@@ -157,7 +178,8 @@ fun UnitConverter(modifier: Modifier) {
                             convertUnits()
                         }
                     )
-                    DropdownMenuItem(text =  {Text("Meter")},
+                    DropdownMenuItem(
+                        text = { Text("Meter") },
                         onClick = {
                             oExpanded = false
                             outputUnit = "Meter"
@@ -165,7 +187,8 @@ fun UnitConverter(modifier: Modifier) {
                             convertUnits()
                         }
                     )
-                    DropdownMenuItem(text =  {Text("Feet")},
+                    DropdownMenuItem(
+                        text = { Text("Feet") },
                         onClick = {
                             oExpanded = false
                             outputUnit = "Feet"
@@ -173,7 +196,8 @@ fun UnitConverter(modifier: Modifier) {
                             convertUnits()
                         }
                     )
-                    DropdownMenuItem(text =  {Text("Millimeter")},
+                    DropdownMenuItem(
+                        text = { Text("Millimeter") },
                         onClick = {
                             oExpanded = false
                             outputUnit = "Millimeter"
@@ -187,7 +211,12 @@ fun UnitConverter(modifier: Modifier) {
 
         }
         Spacer(modifier = Modifier.height(10.dp))
-        Text("Result: $outputValue")
+        // Result Text
+        Text(
+            "Result: $outputValue",
+            style = MaterialTheme.typography.headlineMedium
+        )
+
     }
 }
 
